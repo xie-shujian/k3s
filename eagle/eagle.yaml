@@ -1,0 +1,24 @@
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: eagle
+spec:
+  selector:
+    matchLabels:
+      app: eagle
+  template:
+    metadata:
+      labels:
+        app: eagle
+    spec:
+      containers:
+      - image: taihu/eagle:3.1
+        name: eagle
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8048
+          name: eagle-web
+
+
+          
