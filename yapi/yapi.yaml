@@ -1,0 +1,78 @@
+---
+
+apiVersion: v1
+kind: Secret
+type: Opaque
+metadata:
+  name: yapi-secret
+data:
+  config.json: |
+    ewogICJwb3J0IjogIjMwMDAiLAogICJhZG1pbkFjY291bnQiOiAiYWRtaW5AYWRtaW4uY29tIiwK
+    ICAidGltZW91dCI6MTIwMDAwLAogICJkYiI6IHsKICAgICJzZXJ2ZXJuYW1lIjogIm1vbmdvZGIi
+    LAogICAgIkRBVEFCQVNFIjogIm1vbmdvZGIiLAogICAgInBvcnQiOiAyNzAxNywKICAgICJ1c2Vy
+    IjogInJvb3QiLAogICAgInBhc3MiOiAidGFpaHUxMjMiLAogICAgImF1dGhTb3VyY2UiOiAiYWRt
+    aW4iCiAgfSwKICAibWFpbCI6IHsKICAgICJlbmFibGUiOiBmYWxzZSwKICAgICJob3N0IjogInNt
+    dHAuMTYzLmNvbSIsCiAgICAicG9ydCI6IDQ2NSwKICAgICJmcm9tIjogIioqKkAxNjMuY29tIiwK
+    ICAgICJhdXRoIjogewogICAgICAidXNlciI6ICIqKipAMTYzLmNvbSIsCiAgICAgICJwYXNzIjog
+    IioqKioqIgogICAgfQogIH0KfQo=
+
+
+
+---
+
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: yapi
+  labels:
+    app: yapi
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: yapi
+  template:
+    metadata:
+      labels:
+        app: yapi
+    spec:
+      containers:
+      - name: yapi
+        image: xieshujian/yapi:1.9.2
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 3000
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 3000
+          initialDelaySeconds: 5
+          periodSeconds: 5
+        volumeMounts:
+        - name: config
+          mountPath: "/yapi/config.json"
+          subPath: "config.json"
+      volumes:
+      - name: config
+        secret:
+          secretName: yapi-secret
+          items:
+          - key: config.json
+            path: config.json
+
+
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: yapi
+spec:
+  selector:
+    app: yapi
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3000
+

@@ -1,0 +1,16 @@
+FROM node:11 as builder
+WORKDIR /yapi
+RUN wget https://github.com/YMFE/yapi/archive/refs/tags/v1.9.2.tar.gz
+RUN tar -zxvf v1.9.2.tar.gz
+RUN mv yapi-1.9.2 vendors
+WORKDIR /yapi/vendors
+RUN npm install --production --registry https://registry.npm.taobao.org
+
+FROM node:11
+LABEL maintainer="xiesj@live.com"
+ENV TZ="Asia/Shanghai"
+WORKDIR /yapi/vendors
+COPY --from=builder /yapi/vendors /yapi/vendors
+EXPOSE 3000
+CMD ["node","server/app.js"]
+
