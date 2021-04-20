@@ -51,7 +51,7 @@ spec:
           periodSeconds: 5
         volumeMounts:
         - name: config
-          mountPath: "/yapi/config.json"
+          mountPath: "/home/node/config.json"
           subPath: "config.json"
       volumes:
       - name: config
