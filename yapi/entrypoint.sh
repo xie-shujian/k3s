@@ -1,6 +1,6 @@
 #!/bin/bash
 #update config file with env var
-sed -i 2c\"port\": \"$YAPI_PORT\", ../ config.json
+sed -i 2c\"port\": \"$YAPI_SERVER_PORT\", ../ config.json
 sed -i 3c\"adminAccount\": \"$YAPI_ADMINACCOUNT\", ../ config.json
 sed -i 4c\"timeout\": \"$YAPI_TIMEOUT\", ../ config.json
 sed -i 6c\"servername\": \"$YAPI_DB_SERVERNAME\", ../ config.json
