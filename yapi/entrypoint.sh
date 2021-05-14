@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 #update config file with env var
 sed -i 2c\"port\": \"$YAPI_PORT\", ../ config.json
 sed -i 3c\"adminAccount\": \"$YAPI_ADMINACCOUNT\", ../ config.json
