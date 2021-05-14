@@ -1,4 +1,5 @@
 #!/bin/sh
+#update config file with env var
 sed -i 2c\"port\": \"$YAPI_PORT\", ../ config.json
 sed -i 3c\"adminAccount\": \"$YAPI_ADMINACCOUNT\", ../ config.json
 sed -i 4c\"timeout\": \"$YAPI_TIMEOUT\", ../ config.json
@@ -15,4 +16,5 @@ sed -i 16c\"port\": \"$YAPI_MAIL_FROM\", ../ config.json
 sed -i 17c\"from\": \"$YAPI_MAIL_AUTH\", ../ config.json
 sed -i 18c\"auth\": \"$YAPI_MAIL_USER\", ../ config.json
 sed -i 19c\"user\": \"$YAPI_MAIL_PASS\" ../ config.json
+#start yapi
 node server/app.js
