@@ -197,7 +197,7 @@ spec:
 ## 建立service叫yapi
 ## 创建命名空间
 kubectl create ns yapi
-##安装mongodb
+## 安装mongodb
 把mongodb chart下载解压，找到values.yaml,打开，修改里面的rootPassword的值改为taihu123
 另外把useStatefulSet设置成true，我们使用statefull
 执行下面命令安装mongodb
@@ -224,5 +224,5 @@ npm run install-server
 ![image.png](https://upload-images.jianshu.io/upload_images/22408736-18ef838b40e2b71d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 ![image.png](https://upload-images.jianshu.io/upload_images/22408736-7886ea93e3f96f6f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 ![image.png](https://upload-images.jianshu.io/upload_images/22408736-8b2c4afcfe267754.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-#yapi界面
+## yapi界面
 ![image.png](https://upload-images.jianshu.io/upload_images/22408736-d0d3da7018b042ca.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
