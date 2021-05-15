@@ -201,8 +201,11 @@ kubectl create ns yapi
 把mongodb chart下载解压，找到values.yaml,打开，修改里面的rootPassword的值改为taihu123
 另外把useStatefulSet设置成true，我们使用statefull
 执行下面命令安装mongodb
+
 helm repo add bitnami https://charts.bitnami.com/bitnami
+
 helm install mongodb bitnami/mongodb -n yapi -f values.yaml
+
 安装完毕之后进入容器，执行下面命令，新建普通账号，和数据库
 ```mongodb
 mongo -u root -p taihu123
