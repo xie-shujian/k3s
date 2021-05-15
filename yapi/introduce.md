@@ -193,9 +193,9 @@ spec:
 }
 ```
 我们会用mongodb，servername就是service name就叫mongodb
-##探针，这里使用http探针，5秒跑一次
-##建立service叫yapi
-#创建命名空间
+## 探针，这里使用http探针，5秒跑一次
+## 建立service叫yapi
+## 创建命名空间
 kubectl create ns yapi
 ##安装mongodb
 把mongodb chart下载解压，找到values.yaml,打开，修改里面的rootPassword的值改为taihu123
@@ -209,14 +209,14 @@ mongo -u root -p taihu123
 use yapidb
 db.createUser({user: "yapiuser",pwd: "yapipassword",roles: [ { role: "dbOwner", db: "yapidb" } ]} )
 ```
-#安装yapi
+## 安装yapi
 kubectl apply -f yapi.yaml -n yapi
 安装完毕之后，进入其中一个pod
 执行下面命令
 npm run install-server
 初始化数据库
 接下来就可以登录yapi了，账号是admin@admin.com,密码是ymfe.org
-#k3s界面
+## k3s界面
 ![image.png](https://upload-images.jianshu.io/upload_images/22408736-6cb86dea6a87c237.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 ![image.png](https://upload-images.jianshu.io/upload_images/22408736-fe27b124022fc42d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
