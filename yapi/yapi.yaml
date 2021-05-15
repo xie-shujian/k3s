@@ -5,21 +5,10 @@ kind: Secret
 type: Opaque
 metadata:
   name: yapi-secret
-data:
-  config.json: |
-    ewogICJwb3J0IjogIjMwMDAiLAogICJhZG1pbkFjY291bnQiOiAiYWRtaW5AYWRtaW4uY29tIiwK
-    ICAidGltZW91dCI6MTIwMDAwLAogICJkYiI6IHsKICAgICJzZXJ2ZXJuYW1lIjogIm1vbmdvZGIi
-    LAogICAgIkRBVEFCQVNFIjogIm1vbmdvZGIiLAogICAgInBvcnQiOiAyNzAxNywKICAgICJ1c2Vy
-    IjogInJvb3QiLAogICAgInBhc3MiOiAidGFpaHUxMjMiLAogICAgImF1dGhTb3VyY2UiOiAiYWRt
-    aW4iCiAgfSwKICAibWFpbCI6IHsKICAgICJlbmFibGUiOiBmYWxzZSwKICAgICJob3N0IjogInNt
-    dHAuMTYzLmNvbSIsCiAgICAicG9ydCI6IDQ2NSwKICAgICJmcm9tIjogIioqKkAxNjMuY29tIiwK
-    ICAgICJhdXRoIjogewogICAgICAidXNlciI6ICIqKipAMTYzLmNvbSIsCiAgICAgICJwYXNzIjog
-    IioqKioqIgogICAgfQogIH0KfQo=
-
-
+stringData:
+  YAPI_DB_PASS: yapipassword
 
 ---
-
 
 apiVersion: apps/v1
 kind: Deployment
@@ -28,7 +17,7 @@ metadata:
   labels:
     app: yapi
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: yapi
@@ -40,6 +29,20 @@ spec:
       containers:
       - name: yapi
         image: xieshujian/yapi:1.9.2
+        env:
+        - name: YAPI_DB_SERVERNAME
+          value: mongodb
+        - name: YAPI_DB_DATABASE
+          value: yapidb
+        - name: YAPI_DB_USER
+          value: yapiuser
+        - name: YAPI_DB_PASS
+          valueFrom:
+            secretKeyRef:
+              name: yapi-secret
+              key: YAPI_DB_PASS
+        - name: YAPI_DB_AUTHSOURCE
+          value: yapidb
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 3000
@@ -49,19 +52,6 @@ spec:
             port: 3000
           initialDelaySeconds: 5
           periodSeconds: 5
-        volumeMounts:
-        - name: config
-          mountPath: "/home/node/config.json"
-          subPath: "config.json"
-      volumes:
-      - name: config
-        secret:
-          secretName: yapi-secret
-          items:
-          - key: config.json
-            path: config.json
-
-
 
 ---
 apiVersion: v1

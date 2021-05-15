@@ -5,14 +5,16 @@ RUN tar -zxvf v1.9.2.tar.gz
 RUN mv yapi-1.9.2 vendors
 WORKDIR /home/node/vendors
 RUN apk add python make
-RUN npm install --production --registry https://registry.npm.taobao.org
+RUN npm install --production
+RUN wget https://raw.githubusercontent.com/xie-shujian/k3s/main/yapi/entrypoint.sh
+RUN chmod a+x entrypoint.sh
 
 FROM node:11-alpine
 LABEL maintainer="xiesj@live.com"
-WORKDIR /home/node/vendors
-COPY --from=builder /home/node/vendors /home/node/vendors
 USER node
 ENV TZ="Asia/Shanghai"
+WORKDIR /home/node/vendors
+COPY --from=builder /home/node/vendors /home/node/vendors
+RUN cp config_example.json ../config.json
 EXPOSE 3000
-CMD ["node","server/app.js"]
-
+ENTRYPOINT ["sh", "entrypoint.sh"]
