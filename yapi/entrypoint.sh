@@ -29,22 +29,22 @@ if [ $YAPI_DB_AUTHSOURCE ]; then
     sed -i 11c\"authSource\":\"$YAPI_DB_AUTHSOURCE\" $conf_file
 fi
 if [ $YAPI_MAIL_ENABLE ]; then
-    sed -i 14c\"mail\":\"$YAPI_MAIL_ENABLE\", $conf_file
+    sed -i 14c\"enable\":$YAPI_MAIL_ENABLE, $conf_file
 fi
 if [ $YAPI_MAIL_HOST ]; then
-    sed -i 15c\"enable\":\"$YAPI_MAIL_HOST\", $conf_file
+    sed -i 15c\"host\":\"$YAPI_MAIL_HOST\", $conf_file
 fi
 if [ $YAPI_MAIL_PORT ]; then
-    sed -i 16c\"host\":\"$YAPI_MAIL_PORT\", $conf_file
+    sed -i 16c\"port\":$YAPI_MAIL_PORT, $conf_file
 fi
 if [ $YAPI_MAIL_FROM ]; then
-    sed -i 17c\"port\":\"$YAPI_MAIL_FROM\", $conf_file
+    sed -i 17c\"from\":\"$YAPI_MAIL_FROM\", $conf_file
 fi
 if [ $YAPI_MAIL_USER ]; then
-    sed -i 19c\"auth\":\"$YAPI_MAIL_USER\", $conf_file
+    sed -i 19c\"user\":\"$YAPI_MAIL_USER\", $conf_file
 fi
 if [ $YAPI_MAIL_PASS ]; then
-    sed -i 20c\"user\":\"$YAPI_MAIL_PASS\" $conf_file
+    sed -i 20c\"pass\":\"$YAPI_MAIL_PASS\" $conf_file
 fi
 #start yapi
 node server/app.js
