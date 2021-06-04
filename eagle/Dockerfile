@@ -14,5 +14,6 @@ ENV TZ="Asia/Shanghai"
 ENV KE_HOME=/eagle
 ENV PATH=$PATH:$KE_HOME/bin
 RUN chmod +x /eagle/bin/ke.sh
+RUN mkdir -p /hadoop/kafka-eagle/db
 EXPOSE 8048
 CMD ["sh","/eagle/bin/entrypoint.sh"]
