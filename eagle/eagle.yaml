@@ -1,4 +1,3 @@
-
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -13,12 +12,29 @@ spec:
         app: eagle
     spec:
       containers:
-      - image: taihu/eagle:3.1
-        name: eagle
+      - image: xieshujian/eagle:2.0.5
         imagePullPolicy: IfNotPresent
+        livenessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /
+            port: 8048
+            scheme: HTTP
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 1
+        name: eagle
         ports:
         - containerPort: 8048
-          name: eagle-web
-
-
-          
+          name: eagle        
+        volumeMounts:
+        - name: eagle-config
+          mountPath: /eagle/conf/system-config.properties
+          subPath: system-config.properties
+      volumes:
+      - name: eagle-config
+        configMap:
+          name: eagle
+          items:
+            - key: system-config.properties
+              path: system-config.properties
